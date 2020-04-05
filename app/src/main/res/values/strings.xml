@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Pker</string>
+    <string name="title_my_colors">My Colors</string>
+    <string name="info_permissions_not_granted">Permissions not granted by the user.</string>
+</resources>
