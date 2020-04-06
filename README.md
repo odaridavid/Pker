@@ -11,9 +11,10 @@
 - [Timber](https://github.com/JakeWharton/timber) - Logger
 - [Recyclerview Animators](https://github.com/wasabeef/recyclerview-animators) - Simplifies recyclerview animations
 
-## App Demo
+## Screenshots
 
-Loading...
+|<img src="art/camera.png" alt="drawing" width="200"/>|
+|:--:|
 
 ## Contributions
 
