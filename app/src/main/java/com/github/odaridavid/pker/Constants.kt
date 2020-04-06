@@ -1,7 +1,5 @@
 package com.github.odaridavid.pker
 
-import android.Manifest
-
 
 /**
  *
@@ -18,5 +16,4 @@ import android.Manifest
  **/
 object Constants {
     const val PKER_DATABASE_NAME = "pker_db"
-    val CAMERA_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
 }

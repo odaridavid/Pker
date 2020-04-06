@@ -1,7 +1,10 @@
 package com.github.odaridavid.pker
 
+import android.app.Activity
 import android.content.Context
+import android.util.DisplayMetrics
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 
@@ -28,3 +31,26 @@ fun showSnackbar(attachOn: View, msg: String) {
     Snackbar.make(attachOn, msg, Snackbar.LENGTH_LONG)
 }
 
+val Activity.screenHeight: Int
+    get() {
+        val dm = provideDisplayMetrics(this)
+        return dm.heightPixels
+    }
+val Activity.screenWidth: Int
+    get() {
+        val dm = provideDisplayMetrics(this)
+        return dm.widthPixels
+    }
+
+fun provideDisplayMetrics(activity: Activity): DisplayMetrics {
+    val dm = DisplayMetrics()
+    activity.windowManager.defaultDisplay.getMetrics(dm)
+    return dm
+}
+
+fun transparentBars(activity: Activity) {
+    activity.window.setFlags(
+        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+    )
+}

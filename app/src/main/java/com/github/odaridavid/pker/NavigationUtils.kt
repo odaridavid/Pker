@@ -17,8 +17,8 @@ import android.content.Intent
  * the License.
  *
  **/
-inline fun <reified T : Activity> Context.navigateTo(noinline extras: ((Intent) -> Unit)? = null) {
+inline fun <reified T : Activity> Context.navigateTo(noinline block: ((Intent) -> Unit)? = null) {
     val intent = Intent(this, T::class.java)
-    if (extras != null) extras(intent)
+    block?.run { block(intent) }
     startActivity(intent)
 }
