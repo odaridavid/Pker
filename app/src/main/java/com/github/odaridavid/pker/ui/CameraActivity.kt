@@ -45,6 +45,7 @@ class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         viewFinder = findViewById(R.id.preview_view)
 
         if (allPermissionsGranted(this, CameraUtils.CAMERA_PERMISSIONS)) {
+            //Adds runnable to the message queue which will be handled on the apps main thread
             viewFinder.post { startCamera() }
         } else {
             ActivityCompat.requestPermissions(
