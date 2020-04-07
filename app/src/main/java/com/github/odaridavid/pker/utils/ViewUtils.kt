@@ -1,4 +1,4 @@
-package com.github.odaridavid.pker
+package com.github.odaridavid.pker.utils
 
 import android.app.Activity
 import android.content.Context
@@ -31,16 +31,16 @@ fun showSnackbar(attachOn: View, msg: String) {
     Snackbar.make(attachOn, msg, Snackbar.LENGTH_LONG)
 }
 
-val Activity.screenHeight: Int
-    get() {
-        val dm = provideDisplayMetrics(this)
-        return dm.heightPixels
-    }
-val Activity.screenWidth: Int
-    get() {
-        val dm = provideDisplayMetrics(this)
-        return dm.widthPixels
-    }
+//val Activity.screenHeight: Int
+//    get() {
+//        val dm = provideDisplayMetrics(this)
+//        return dm.heightPixels
+//    }
+//val Activity.screenWidth: Int
+//    get() {
+//        val dm = provideDisplayMetrics(this)
+//        return dm.widthPixels
+//    }
 
 fun provideDisplayMetrics(activity: Activity): DisplayMetrics {
     val dm = DisplayMetrics()
@@ -48,7 +48,7 @@ fun provideDisplayMetrics(activity: Activity): DisplayMetrics {
     return dm
 }
 
-fun transparentBars(activity: Activity) {
+fun setTransparentBars(activity: Activity) {
     activity.window.setFlags(
         WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
         WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS

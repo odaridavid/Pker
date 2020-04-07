@@ -1,7 +1,8 @@
-package com.github.odaridavid.pker
+package com.github.odaridavid.pker.utils
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import android.content.Context
+import android.content.pm.PackageManager
+import androidx.core.content.ContextCompat
 
 /**
  *
@@ -16,10 +17,10 @@ import androidx.room.PrimaryKey
  * the License.
  *
  **/
-@Entity(tableName = "colors")
-data class Color(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    val name: String?,
-    val hex: String,
-    val rgb: String?
-)
+object PermissionUtils {
+    const val RQ_PERMISSIONS = 1000
+
+    fun allPermissionsGranted(context: Context, permissions: Array<String>) = permissions.all {
+        ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+    }
+}

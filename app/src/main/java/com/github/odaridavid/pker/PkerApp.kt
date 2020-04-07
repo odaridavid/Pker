@@ -1,6 +1,7 @@
 package com.github.odaridavid.pker
 
 import android.app.Application
+import com.github.odaridavid.pker.di.framework
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -38,7 +39,7 @@ class PkerApp : Application() {
         startKoin {
             androidLogger()
             androidContext(this@PkerApp)
-            modules(listOf(db, viewModels))
+            modules(listOf(framework))
         }
     }
 }
