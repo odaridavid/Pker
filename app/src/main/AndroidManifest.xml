@@ -4,7 +4,7 @@
     package="com.github.odaridavid.pker">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".PkerApp"
@@ -15,11 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity
-            android:name=".MyColorsActivity"
-            android:label="@string/title_my_colors"
-            android:parentActivityName=".CameraActivity" />
-        <activity android:name=".CameraActivity">
+        <activity android:name=".ui.CameraActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

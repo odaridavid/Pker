@@ -1,15 +1,14 @@
 # Pker
-🎨Pick colors with Camerax and get more detail such as RGB &amp; HEX code values and Color Name
+
+A Sample Application based on Jetpacks' CameraX.
 
 ## Libraries Used
 
 - [Android Jetpack](https://developer.android.com/jetpack)🚀
-- [kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines) - Library Support for coroutines,provides `runBlocking` coroutine builder used in tests
-- [Material Design](https://material.io/develop/android/docs/getting-started/) - build awesome beautiful UIs.🔥🔥
-- [Koin](https://github.com/InsertKoinIO/koin) - lightweight dependency injection framework
-- [Coil](https://github.com/coil-kt/coil) - Image loading
-- [Timber](https://github.com/JakeWharton/timber) - Logger
-- [Recyclerview Animators](https://github.com/wasabeef/recyclerview-animators) - Simplifies recyclerview animations
+- [Material Design](https://material.io/develop/android/docs/getting-started/)🔥🔥
+- [Koin](https://github.com/InsertKoinIO/koin)
+- [Leak Canary](https://square.github.io/leakcanary/getting_started/)
+- [Timber](https://github.com/JakeWharton/timber)
 
 ## Screenshots
 

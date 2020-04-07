@@ -1,7 +1,9 @@
-package com.github.odaridavid.pker
+package com.github.odaridavid.pker.di
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
 
 /**
  *
@@ -16,7 +18,9 @@ import androidx.room.RoomDatabase
  * the License.
  *
  **/
-@Database(entities = [Color::class], version = 1, exportSchema = false)
-abstract class PkerDatabase : RoomDatabase() {
-    abstract fun colorsDao(): ColorsDao
+val framework = module {
+    factory { Preview.Builder().build() }
+
+    //Used to bind camera to lifecycle owner within application process
+    single { ProcessCameraProvider.getInstance(androidContext()) }
 }
