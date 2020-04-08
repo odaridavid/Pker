@@ -42,7 +42,6 @@ class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
     //TODO Animate Switching Cameras
     //TODO Show Preview of captured image
-
     private lateinit var viewFinder: PreviewView
     private lateinit var btnSwitchCamera: ImageButton
     private lateinit var btnTakePicture: ImageButton
@@ -51,6 +50,7 @@ class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     private val cameraProviderFuture: ListenableFuture<ProcessCameraProvider> by inject()
     private val cameraViewModel: CameraViewModel by viewModel()
     private lateinit var cameraProvider: ProcessCameraProvider
+    private lateinit var imageCapture: ImageCapture
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,13 +102,10 @@ class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         val flashCamIcon = getDrawable(cameraViewModel.setFlashIcon(flashMode))
         btnControlFlash.setImageDrawable(flashCamIcon)
 
-        val imageCapture =
-            CameraUtils.buildImageCapture(
-                ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY,
-                flashMode
-            )
-
-        takePicture(imageCapture)
+        imageCapture = CameraUtils.buildImageCapture(
+            ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY,
+            flashMode
+        )
 
         // Attach use cases to the camera with the same lifecycle owner
         val camera = cameraProvider.bindToLifecycle(
@@ -160,27 +157,25 @@ class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     /**
      * Takes the current preview shot
      */
-    private fun takePicture(imageCapture: ImageCapture) {
+    fun takePicture(view: View) {
         //TODO Trigger events on image saved or error
-        btnTakePicture.setOnClickListener {
-            imageCapture.takePicture(
-                ImageCapture.OutputFileOptions.Builder(CameraUtils.getSaveLocation(this@CameraActivity))
-                    .build(),
-                Executors.newSingleThreadExecutor(),
-                object : ImageCapture.OnImageSavedCallback {
+        imageCapture.takePicture(
+            ImageCapture.OutputFileOptions.Builder(CameraUtils.getSaveLocation(this@CameraActivity))
+                .build(),
+            Executors.newSingleThreadExecutor(),
+            object : ImageCapture.OnImageSavedCallback {
 
-                    override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                        val msg = "Photo capture succeeded"
-                        Timber.d(msg)
-                    }
-
-                    override fun onError(exception: ImageCaptureException) {
-                        val msg = "Photo capture failed: ${exception.message}"
-                        Timber.e(msg)
-                    }
+                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                    val msg = "Photo capture succeeded"
+                    Timber.d(msg)
                 }
-            )
-        }
+
+                override fun onError(exception: ImageCaptureException) {
+                    val msg = "Photo capture failed: ${exception.message}"
+                    Timber.e(msg)
+                }
+            }
+        )
     }
 
     /**

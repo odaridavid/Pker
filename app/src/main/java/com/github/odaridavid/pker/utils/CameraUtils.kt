@@ -2,7 +2,6 @@ package com.github.odaridavid.pker.utils
 
 import android.Manifest
 import android.content.Context
-import androidx.annotation.IntRange
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import java.io.File
@@ -46,10 +45,7 @@ object CameraUtils {
      * @see ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY = 1
      *
      */
-    fun buildImageCapture(
-        @IntRange(from = 0, to = 1) captureMode: Int,
-        @IntRange(from = 0, to = 2) flashMode: Int
-    ): ImageCapture {
+    fun buildImageCapture(captureMode: Int, flashMode: Int): ImageCapture {
         return ImageCapture.Builder()
             .apply {
                 setCaptureMode(captureMode)
@@ -64,7 +60,7 @@ object CameraUtils {
      * @see CameraSelector.LENS_FACING_BACK = 1
      * @see CameraSelector.LENS_FACING_FRONT = 0
      */
-    fun buildCameraSelector(@IntRange(from = 0, to = 1) lens: Int): CameraSelector {
+    fun buildCameraSelector(lens: Int): CameraSelector {
         return CameraSelector.Builder()
             .requireLensFacing(lens)
             .build()
