@@ -17,16 +17,43 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/capture_button"
+        android:id="@+id/switch_camera_button"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_margin="48dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/switch_camera"
+        android:onClick="switchCamera"
+        android:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/take_picture_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/take_picture_button"
+        app:srcCompat="@drawable/ic_flip_camera_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/take_picture_button"
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:layout_margin="48dp"
         android:background="@android:color/transparent"
-        android:contentDescription="Take Picture Icon"
+        android:contentDescription="@string/take_picture"
         android:tint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_photo_camera_black_72dp" />
+
+    <ImageButton
+        android:id="@+id/control_flash_button"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_margin="48dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/control_flash"
+        android:onClick="changeFlashMode"
+        android:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/take_picture_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/take_picture_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

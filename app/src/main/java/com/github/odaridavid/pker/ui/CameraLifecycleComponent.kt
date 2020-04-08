@@ -1,11 +1,4 @@
-package com.github.odaridavid.pker.di
-
-import androidx.camera.core.Preview
-import androidx.camera.lifecycle.ProcessCameraProvider
-import com.github.odaridavid.pker.ui.CameraViewModel
-import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
+package com.github.odaridavid.pker.ui
 
 /**
  *
@@ -20,13 +13,5 @@ import org.koin.dsl.module
  * the License.
  *
  **/
-val framework = module {
-    factory { Preview.Builder().build() }
-
-    //Used to bind camera to lifecycle owner within application process
-    single { ProcessCameraProvider.getInstance(androidContext()) }
-}
-
-val viewModel = module {
-    viewModel { CameraViewModel() }
-}
+class CameraLifecycleComponent
+//TODO Move Logic to lifecycle component and register in camera activity
