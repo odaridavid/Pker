@@ -46,10 +46,15 @@ object CameraUtils {
      * @see ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY = 1
      *
      */
-    fun buildImageCapture(@IntRange(from = 0, to = 1) mode: Int): ImageCapture {
+    fun buildImageCapture(
+        @IntRange(from = 0, to = 1) captureMode: Int,
+        @IntRange(from = 0, to = 2) flashMode: Int
+    ): ImageCapture {
         return ImageCapture.Builder()
             .apply {
-                setCaptureMode(mode)
+                setCaptureMode(captureMode)
+                //Flash will be used when taking a picture if activated
+                setFlashMode(flashMode)
             }.build()
     }
 

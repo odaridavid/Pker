@@ -1,7 +1,10 @@
 package com.github.odaridavid.pker
 
 import android.app.Application
+import androidx.camera.camera2.Camera2Config
+import androidx.camera.core.CameraXConfig
 import com.github.odaridavid.pker.di.framework
+import com.github.odaridavid.pker.di.viewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -20,7 +23,7 @@ import timber.log.Timber
  * the License.
  *
  **/
-class PkerApp : Application() {
+class PkerApp : Application(), CameraXConfig.Provider {
 
     override fun onCreate() {
         super.onCreate()
@@ -39,7 +42,11 @@ class PkerApp : Application() {
         startKoin {
             androidLogger()
             androidContext(this@PkerApp)
-            modules(listOf(framework))
+            modules(listOf(framework, viewModel))
         }
+    }
+
+    override fun getCameraXConfig(): CameraXConfig {
+        return Camera2Config.defaultConfig()
     }
 }
