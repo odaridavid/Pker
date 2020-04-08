@@ -37,6 +37,7 @@
         android:layout_margin="48dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/take_picture"
+        android:onClick="takePicture"
         android:tint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

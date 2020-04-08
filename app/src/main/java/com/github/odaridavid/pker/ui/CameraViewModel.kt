@@ -50,7 +50,7 @@ class CameraViewModel : ViewModel() {
      * Takes in current mode and displays icon to switch to alternative mode
      */
     @DrawableRes
-    fun setFlashIcon(mode: Int): Int {
+    fun setFlashIcon(@IntRange(from = 0, to = 2) mode: Int): Int {
         return when (mode) {
             ImageCapture.FLASH_MODE_ON -> R.drawable.ic_flash_on_black_24dp
             ImageCapture.FLASH_MODE_OFF -> R.drawable.ic_flash_off_black_24dp
