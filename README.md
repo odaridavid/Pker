@@ -12,7 +12,7 @@ A Sample Application based on Jetpacks' CameraX.
 
 ## Screenshots
 
-|<img src="art/camera.png" alt="drawing" width="200"/>|
+|<img src="art/cam_shot.png" width="200"/>|
 |:--:|
 
 ## Contributions
