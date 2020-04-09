@@ -1,13 +1,14 @@
 package com.github.odaridavid.pker.ui
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.IntRange
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.odaridavid.pker.R
+import com.github.odaridavid.pker.annotations.FlashMode
+import com.github.odaridavid.pker.annotations.LensType
 
 /**
  *
@@ -30,18 +31,19 @@ class CameraViewModel : ViewModel() {
 
 
     init {
+        //Default Config
         _cameraConfig.value = CameraConfig(
             lens = CameraSelector.LENS_FACING_FRONT,
             flash = ImageCapture.FLASH_MODE_ON
         )
     }
 
-    fun switchCameraFacingLense(@IntRange(from = 0, to = 1) mode: Int) {
-        val updatedConfig = _cameraConfig.value!!.copy(lens = mode)
+    fun switchCameraFacingLense(@LensType lens: Int) {
+        val updatedConfig = _cameraConfig.value!!.copy(lens = lens)
         _cameraConfig.value = updatedConfig
     }
 
-    fun switchFlashMode(@IntRange(from = 0, to = 2) mode: Int) {
+    fun switchFlashMode(@FlashMode mode: Int) {
         val updatedConfig = _cameraConfig.value!!.copy(flash = mode)
         _cameraConfig.value = updatedConfig
     }
@@ -50,7 +52,7 @@ class CameraViewModel : ViewModel() {
      * Takes in current mode and displays icon to switch to alternative mode
      */
     @DrawableRes
-    fun setFlashIcon(@IntRange(from = 0, to = 2) mode: Int): Int {
+    fun setFlashIcon(@FlashMode mode: Int): Int {
         return when (mode) {
             ImageCapture.FLASH_MODE_ON -> R.drawable.ic_flash_on_black_24dp
             ImageCapture.FLASH_MODE_OFF -> R.drawable.ic_flash_off_black_24dp
