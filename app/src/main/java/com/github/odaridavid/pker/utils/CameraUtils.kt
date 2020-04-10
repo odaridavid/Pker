@@ -27,13 +27,6 @@ object CameraUtils {
     val CAMERA_PERMISSIONS =
         arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
-    /**
-     * Helper function that defines save location for image captured
-     */
-    fun getSaveLocation(context: Context) = File(
-        context.externalMediaDirs.first(),
-        "${System.currentTimeMillis()}.jpg"
-    )
 
     /**
      * Set up the capture use case by defining a capture mode  to allow users to take photos.
