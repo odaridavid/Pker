@@ -3,12 +3,16 @@ package com.github.odaridavid.pker.ui
 import androidx.annotation.DrawableRes
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.odaridavid.pker.R
 import com.github.odaridavid.pker.annotations.FlashMode
 import com.github.odaridavid.pker.annotations.LensType
+import timber.log.Timber
+import java.io.File
+import java.util.concurrent.Executors
 
 /**
  *
@@ -29,6 +33,9 @@ class CameraViewModel : ViewModel() {
     val cameraConfig: LiveData<CameraConfig>
         get() = _cameraConfig
 
+    private val _onImageCapturedResult = MutableLiveData<String>()
+    val onImageCapturedResult: LiveData<String>
+        get() = _onImageCapturedResult
 
     init {
         //Default Config
@@ -36,6 +43,10 @@ class CameraViewModel : ViewModel() {
             lens = CameraSelector.LENS_FACING_FRONT,
             flash = ImageCapture.FLASH_MODE_ON
         )
+    }
+
+    fun setOnImageCapturedResult(msg: String) {
+        _onImageCapturedResult.postValue(msg)
     }
 
     fun switchCameraFacingLense(@LensType lens: Int) {
@@ -59,6 +70,33 @@ class CameraViewModel : ViewModel() {
             ImageCapture.FLASH_MODE_AUTO -> R.drawable.ic_flash_auto_black_24dp
             else -> R.drawable.ic_flash_on_black_24dp
         }
+    }
+
+    fun takePicture(imageCapture: ImageCapture, parent: File) {
+        imageCapture.takePicture(
+            ImageCapture.OutputFileOptions.Builder(
+                    File(
+                        parent,
+                        "${System.currentTimeMillis()}.jpg"
+                    )
+                )
+                .build(),
+            Executors.newSingleThreadExecutor(),
+            object : ImageCapture.OnImageSavedCallback {
+
+                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                    val msg = "Photo capture succeeded"
+                    Timber.d(msg)
+                    setOnImageCapturedResult(msg)
+                }
+
+                override fun onError(exception: ImageCaptureException) {
+                    val msg = "Photo capture failed: ${exception.message}"
+                    Timber.e(msg)
+                    setOnImageCapturedResult(msg)
+                }
+            }
+        )
     }
 
 }

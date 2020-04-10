@@ -6,7 +6,6 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
@@ -22,8 +21,6 @@ import com.github.odaridavid.pker.utils.showToast
 import com.google.common.util.concurrent.ListenableFuture
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
-import java.util.concurrent.Executors
 
 /**
  *
@@ -58,12 +55,16 @@ class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         setTransparentBars(this)
 
         initViews()
+    }
 
+    override fun onStart() {
+        super.onStart()
         checkPermissionsAndInit(onPermissionNotGranted = {
             ActivityCompat.requestPermissions(
                 this, CameraUtils.CAMERA_PERMISSIONS, RQ_PERMISSIONS
             )
         })
+        observeOnImageCaptured()
     }
 
 
@@ -158,24 +159,7 @@ class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
      * Takes the current preview shot
      */
     fun takePicture(view: View) {
-        //TODO Trigger events on image saved or error
-        imageCapture.takePicture(
-            ImageCapture.OutputFileOptions.Builder(CameraUtils.getSaveLocation(this@CameraActivity))
-                .build(),
-            Executors.newSingleThreadExecutor(),
-            object : ImageCapture.OnImageSavedCallback {
-
-                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    val msg = "Photo capture succeeded"
-                    Timber.d(msg)
-                }
-
-                override fun onError(exception: ImageCaptureException) {
-                    val msg = "Photo capture failed: ${exception.message}"
-                    Timber.e(msg)
-                }
-            }
-        )
+        cameraViewModel.takePicture(imageCapture, externalMediaDirs.first())
     }
 
     /**
@@ -185,4 +169,9 @@ class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         //TODO Implement Zoom
     }
 
+    private fun observeOnImageCaptured() {
+        cameraViewModel.onImageCapturedResult.observe(this, Observer { msg ->
+            showToast(msg)
+        })
+    }
 }
