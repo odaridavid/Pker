@@ -29,6 +29,9 @@ class CameraViewModel : ViewModel() {
     val cameraConfig: LiveData<CameraConfig>
         get() = _cameraConfig
 
+    private val _onImageCapturedResult = MutableLiveData<String>()
+    val onImageCapturedResult: LiveData<String>
+        get() = _onImageCapturedResult
 
     init {
         //Default Config
@@ -36,6 +39,10 @@ class CameraViewModel : ViewModel() {
             lens = CameraSelector.LENS_FACING_FRONT,
             flash = ImageCapture.FLASH_MODE_ON
         )
+    }
+
+    fun setOnImageCapturedResult(msg:String){
+        _onImageCapturedResult.postValue(msg)
     }
 
     fun switchCameraFacingLense(@LensType lens: Int) {

@@ -58,12 +58,16 @@ class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         setTransparentBars(this)
 
         initViews()
+    }
 
+    override fun onStart() {
+        super.onStart()
         checkPermissionsAndInit(onPermissionNotGranted = {
             ActivityCompat.requestPermissions(
                 this, CameraUtils.CAMERA_PERMISSIONS, RQ_PERMISSIONS
             )
         })
+        observeOnImageCaptured()
     }
 
 
@@ -158,7 +162,6 @@ class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
      * Takes the current preview shot
      */
     fun takePicture(view: View) {
-        //TODO Trigger events on image saved or error
         imageCapture.takePicture(
             ImageCapture.OutputFileOptions.Builder(CameraUtils.getSaveLocation(this@CameraActivity))
                 .build(),
@@ -168,11 +171,13 @@ class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                     val msg = "Photo capture succeeded"
                     Timber.d(msg)
+                    cameraViewModel.setOnImageCapturedResult(msg)
                 }
 
                 override fun onError(exception: ImageCaptureException) {
                     val msg = "Photo capture failed: ${exception.message}"
                     Timber.e(msg)
+                    cameraViewModel.setOnImageCapturedResult(msg)
                 }
             }
         )
@@ -185,4 +190,14 @@ class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         //TODO Implement Zoom
     }
 
+    override fun onStop() {
+        super.onStop()
+        cameraProvider.unbindAll()
+    }
+
+    private fun observeOnImageCaptured() {
+        cameraViewModel.onImageCapturedResult.observe(this, Observer { msg ->
+            showToast(msg)
+        })
+    }
 }
